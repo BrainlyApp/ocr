@@ -1,0 +1,6 @@
+{
+  "require": {
+    "silex/silex": "~1.2",
+    "thiagoalessio/tesseract_ocr": ">= 0.2.0"
+  }
+}
