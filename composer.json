@@ -1,6 +1,12 @@
 {
   "require": {
     "silex/silex": "~1.2",
-    "thiagoalessio/tesseract_ocr": ">= 0.2.0"
+    "thiagoalessio/tesseract_ocr": ">= 0.2.0",
+    "twig/twig": "1.18.0"
+  },
+  "autoload": {
+    "psr-0": {
+      "Brainly": "./src/"
+    }
   }
 }
