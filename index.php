@@ -27,5 +27,4 @@ $app->get('/last', function() use ($app) {
     ));
 });
 
-
 $app->run();

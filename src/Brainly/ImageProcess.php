@@ -30,5 +30,36 @@ class ImageProcess
         return $image;
     }
 
+    public function getAverageColor(\Imagick $imageOriginal)
+    {
+        try {
+            $image = clone $imageOriginal;
+            // Scale down to 1x1 pixel to make Imagick do the average
+            $image->scaleimage(1, 1);
+            /** @var ImagickPixel $pixel */
+            if(!$pixels = $image->getimagehistogram()) {
+                return null;
+            }
+        } catch(ImagickException $e) {
+            // Image Magick Error!
+            return null;
+        } catch(Exception $e) {
+            // Unknown Error!
+            return null;
+        }
+
+        $pixel = reset($pixels);
+        $rgb = $pixel->getcolor();
+
+        return sprintf('#%02X%02X%02X', $rgb['r'], $rgb['g'], $rgb['b']);
+
+    }
+
+    public function pixelsBelowToBlack(\Imagick $image, $avg)
+    {
+        $image->blackThresholdImage($avg);
+        return $image;
+    }
+
 
 }

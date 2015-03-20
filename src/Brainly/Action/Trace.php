@@ -40,7 +40,10 @@ class Trace
         $image = new \Imagick($this->getRecivedFilePath($processedFile));
 
         $image = $this->imageProcess->convertToGrayScale($image);
+        $avg = $this->imageProcess->getAverageColor($image);
+        $image = $this->imageProcess->pixelsBelowToBlack($image, $avg);
         $image = $this->imageProcess->convertToTiff($image);
+
         $image = $this->imageProcess->setImageFilename(PROCESSED_IMAGES, $image);
         $this->saveImageInDestination($image);
         $this->initializeTesseract($image);
