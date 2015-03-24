@@ -61,5 +61,38 @@ class ImageProcess
         return $image;
     }
 
+    public function imageFixOrientation(\Imagick $image) {
+        if (method_exists($image, 'getImageProperty')) {
+            $orientation = $image->getImageProperty('exif:Orientation');
+        } else {
+            $filename = $image->getImageFilename();
+
+            if (empty($filename)) {
+                $filename = 'data://image/jpeg;base64,' . base64_encode($image->getImageBlob());
+            }
+
+            $exif = exif_read_data($filename);
+            $orientation = isset($exif['Orientation']) ? $exif['Orientation'] : null;
+        }
+
+        if (!empty($orientation)) {
+            switch ($orientation) {
+                case 3:
+                    $image->rotateImage('#000000', 180);
+                    break;
+
+                case 6:
+                    $image->rotateImage('#000000', 90);
+                    break;
+
+                case 8:
+                    $image->rotateImage('#000000', -90);
+                    break;
+            }
+        }
+
+        return $image;
+    }
+
 
 }
