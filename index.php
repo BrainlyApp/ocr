@@ -22,8 +22,11 @@ $app->post('/trace', function(Request $request) use($app) {
 
 $app->get('/last', function() use ($app) {
     $filePath = file_get_contents(LAST_IMAGE_NAME);
+    $im = new Imagick($filePath);
+    $exif = $im->getImageProperties("exif:*");
     return $app['twig']->render('last.twig', array(
-        'filepath' => $filePath
+        'filepath' => $filePath,
+        'exif' => $exif
     ));
 });
 

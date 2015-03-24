@@ -4,5 +4,10 @@
 </head>
 <body>
 <img src="{{ filepath }}">
+<div>
+    {% for key, value in exif %}
+        {{ key }}   -   {{ value }} <br>
+    {% endfor %}
+</div>
 </body>
 </html>
